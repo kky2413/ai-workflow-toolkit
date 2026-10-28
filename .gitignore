@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+.DS_Store
+.env
+.env.*
+!.env.example
+# Temporary / assessment outputs that must not be pushed
+work/
+outputs/
+reports/
+private_data/
+*.log

@@ -1,0 +1,7 @@
+{
+  "files": [
+    {"path": "README.md", "min_bytes": 10},
+    {"path": "examples/sample_sales.csv", "min_bytes": 10},
+    {"path": "examples/sample_cases.json", "min_bytes": 10}
+  ]
+}
