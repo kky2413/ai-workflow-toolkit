@@ -28,10 +28,11 @@ PowerShell에서는 Python 명령이 python일 수 있습니다. **가장 먼저
 
 ## 작업별 바로 가기
 
-- [도구 전체 사용법](docs/TOOL_CATALOG.md): 11개 Python 코드와 명령어
+- [도구 전체 사용법](docs/TOOL_CATALOG.md): 12개 Python 코드와 명령어
 - [작업 유형별 업무 흐름](docs/WORKFLOWS.md): 데이터·보고서·웹·자동화·문서
 - [데이터 정확성](docs/DATA_INTEGRITY.md): 결합 전 행 수, 중복·분모·단위 검사
 - [Codex 명령어](docs/CODEX_COMMANDS.md): 모델·상태·리뷰·종료
+- [Codex 프롬프트 예시](docs/PROMPT_EXAMPLES.md): 작업 분석 → 구현 → 이해도 확인 → 스스로 설명
 - [파일별 설명](docs/FILE_BY_FILE.md): 모든 파일의 구성과 활용
 - [안전 사용 안내](docs/SAFE_USE.md): 권한, 전송, 원본 보존, 금지 동작
 - [소스코드 검토](docs/CODE_REVIEW.md): 코드의 실제 기능과 한계
