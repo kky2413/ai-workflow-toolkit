@@ -116,3 +116,11 @@ python3 -m unittest discover -s tests -v
 위의 /data 경로와 id 열은 예시입니다. 실제 파일이 없으면 오류가 정상입니다. 각 명령어의 입력과 결과 해석은 [전체 도구 카탈로그](TOOL_CATALOG.md)에 있습니다.
 
 **일반 업무에선 도구가 목적이 아닙니다.** 먼저 현재 프로젝트의 지시서와 실제 파일을 확인한 뒤 필요한 기능에만 활용하세요. Codex Skill 등록이나 외부 패키지 설치는 기본 단계가 아닙니다.
+
+## 9. JSON 구조 검증
+
+JSON API 결과를 점검하려면 [도구 카탈로그 12번](TOOL_CATALOG.md)의 계약 설정 파일 예제를 참고하세요.
+
+~~~bash
+python3 scripts/json_structure_check.py --config /data/contract.json
+~~~

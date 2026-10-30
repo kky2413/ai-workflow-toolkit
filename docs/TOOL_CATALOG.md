@@ -1,4 +1,4 @@
-# Python 도구 11개 — 입력·출력·실행 방법
+# Python 도구 12개 — 입력·출력·실행 방법
 
 **실행 위치:** 아래 명령어는 ai-workflow 저장소 루트 기준입니다. 명령어의 /data 등은 예시이며 실제 파일 경로로 바꾸세요. Linux는 python3, PowerShell은 python을 사용할 수 있습니다.
 
@@ -118,3 +118,24 @@ python3 scripts/http_smoke.py http://127.0.0.1:3000/health
 - 파일 점검: 0 선언한 경로·크기 충족, 1 실패, 2 잘못된 manifest
 
 위의 '통과'는 도구가 확인한 조건만 가리킵니다. 별도의 사업·품질·보안상 완전성을 뜻하지 않습니다.
+
+
+## 12. JSON 응답·구조 검사: json_structure_check.py
+
+API 결과·자동 생성 JSON·설정 파일의 필수 열과 자료형을 확인합니다. **JSON Schema 표준 전체가 아닌 경량 필드 검사기**입니다.
+
+~~~bash
+python3 scripts/json_structure_check.py --config /data/contract.json
+~~~
+
+설정 JSON 문법 예시:
+~~~json
+{
+  "source": "response.json",
+  "fields": {"id": "string", "count": "integer", "ok": "boolean"},
+  "required": ["id", "count"],
+  "allow_extra": true
+}
+~~~
+
+source 경로는 contract.json이 있는 폴더 기준입니다. 검사 타입은 string, number, integer, boolean, object, array, null입니다. 누락·자료형 오류·허용하지 않은 추가 열 개수를 보고합니다. 원본 값은 결과에 포함하지 않고, 빈 배열을 통과로 처리하지 않습니다.

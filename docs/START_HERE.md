@@ -52,3 +52,7 @@ Python 파일은 scripts/ 폴더 안에 있습니다. 구체적인 명령은 [TO
 - 어디에 어떤 이름으로 결과를 저장해야 하나요?
 
 작업이 단순하다면 양식을 모두 작성하기보다 바로 필요한 기능을 수행하세요.
+
+## API나 자동화의 JSON 출력이 필요하면
+
+**scripts/json_structure_check.py**로 JSON 필수 키·자료형을 점검할 수 있습니다. 설정 JSON 작성법은 [도구 설명](TOOL_CATALOG.md)의 12번을 참고하세요.

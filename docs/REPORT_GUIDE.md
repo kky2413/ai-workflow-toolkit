@@ -86,7 +86,7 @@ python3 scripts/quality_report.py --config /data/report_spec.json --output /data
 python3 -m unittest discover -s tests -v
 ```
 
-총 24개 단위 테스트를 정의했습니다. 사용 환경에서 직접 실행해 실제 결과를 확인하세요. 별도의 샘플 데이터 파일을 공개 저장소에 저장하지 않고, 테스트 실행 중 임시 파일을 만들어 사용합니다.
+총 29개 단위 테스트를 정의했습니다. 사용 환경에서 직접 실행해 실제 결과를 확인하세요. 별도의 샘플 데이터 파일을 공개 저장소에 저장하지 않고, 테스트 실행 중 임시 파일을 만들어 사용합니다.
 
 
 ## 7. 그룹별 가중 비율
