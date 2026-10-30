@@ -57,3 +57,14 @@ python3 scripts/verify_outputs.py --root /path/to/project --manifest /path/to/ma
 - 분석 결과는 구조를 미리 확인하는 용도입니다. 데이터의 업무적 의미나 수치의 타당성은 별도로 검증하세요.
 - 이 저장소의 `AGENTS.md`는 다른 상위 폴더나 무관한 프로젝트에 자동 적용되지 않습니다.
 - 파일을 다루기 전 해당 환경의 접근 권한과 정보 보호 기준을 확인하세요.
+
+## 여러 데이터 파일을 활용한 계산 및 보고서 작성
+
+아래 두 프로그램은 기존 데이터 조사 도구와 독립적으로 사용할 수 있습니다. 입력 데이터와 보고서 규칙은 **사용자가 별도로 지정**해야 합니다.
+
+- `scripts/merge_tables.py`: 공통 키를 이용해 두 파일의 열을 결합하여 CSV 생성
+- `scripts/quality_report.py`: 여러 파일의 합계·평균·최솟값·최댓값·개수·비율 및 그룹별 표를 Markdown 보고서로 생성
+- `scripts/tabular_io.py`: CSV·JSON 읽기, XLSX는 `openpyxl`이 설치된 경우에만 읽기
+
+실행법, JSON 설정 파일의 작성 예시는 [다중 데이터 보고서 가이드](docs/REPORT_GUIDE.md)에서 확인하세요.
+

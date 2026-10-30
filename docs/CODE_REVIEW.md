@@ -88,3 +88,28 @@ python3 -m unittest discover -s tests -v
 - 분석용 입력 경로를 명확히 지정하고, 생성된 JSON을 직접 확인하세요.
 - 중요한 결과는 실제 데이터와 별도 계산·실행 테스트로 교차 검증하세요.
 - 지원하지 않는 파일 형식은 전용 파서가 필요하며, 이 저장소에 해당 기능이 있다고 가정하지 마세요.
+
+## 6. scripts/tabular_io.py — 파일 형식 통합 입력
+
+- `read_table(path, max_rows, sheet)`는 CSV·JSON을 열과 행의 형태로 돌려줍니다. 중복·빈 열 이름, 너무 큰 행 수를 거부합니다.
+- XLSX는 설치된 `openpyxl`을 이용해 첫 번째 시트 또는 지정 시트를 읽습니다. 수식 계산은 하지 않으며 저장된 캐시값만 읽습니다.
+
+## 7. scripts/merge_tables.py — 명시적인 키로 열 결합
+
+- `join(left_path,right_path,key,how,prefix)`는 두 파일에서 같은 이름의 키를 사용합니다.
+- 오른쪽 키가 중복되거나 비어 있으면 오류를 반환하고, 오른쪽 열에는 접두사를 붙여 충돌을 방지합니다.
+- 기본 `left` 방식은 왼쪽 모든 행을 유지합니다. 연결되지 않은 오른쪽 값은 빈 칸이므로 별도 확인이 필요합니다.
+- 계산의 의미나 서로 다른 단위의 호환성은 검사하지 않습니다.
+
+## 8. scripts/quality_report.py — 계산·Markdown 보고서
+
+- `generate(spec_path)`는 설정 JSON의 `sources`, `metrics`, `groups`를 읽습니다.
+- `sum`, `mean`, `min`, `max`, `count`, `count_nonmissing`, `ratio_percent`를 지원합니다.
+- 숫자 계산에는 `Decimal`을 사용하고 숫자 아닌 값, 없는 열, 분모 0 등의 오류를 표시합니다.
+- 파일별 원본 경로와 계산 방법을 Markdown 표에 기록합니다.
+- 표의 정확한 업무적 해석, 외부 기준값과의 적합성, 품질 합격 판정은 자동 생성하지 않습니다.
+
+## 9. tests/test_reporting.py — 신규 검증 5개
+
+- CSV·JSON 읽기, 행 제한, 공통 키 결합·중복 감지, 복수 파일 비율·그룹별 보고서, 비정상 숫자 거부를 검사합니다.
+- 기존 5개와 합쳐 총 10개 테스트가 있습니다. XLSX 실제 파일·대용량 성능 검사는 자동 테스트 범위 밖입니다.

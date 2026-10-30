@@ -88,3 +88,14 @@ Codex 입력창에서 `/status`로 현재 상태를 보고 `/model`로 제공되
 - [소스코드 리뷰](CODE_REVIEW.md)
 - [작업 요청문 모음](WORKFLOW_PROMPTS.md)
 - [프로젝트 계획 양식](templates/TASK_PLAN.md)
+
+## 7. 여러 파일의 데이터로 보고서 만들기
+
+보고서 생성기는 복수의 CSV·JSON을 읽고 사용자가 지정한 지표·비율·그룹별 표를 작성합니다. XLSX는 별도 라이브러리가 있는 환경에서만 읽습니다.
+
+```bash
+python3 scripts/quality_report.py --config /path/to/report_spec.json --output /path/to/report.md
+python3 scripts/merge_tables.py --left /path/to/first.csv --right /path/to/second.csv --key lot_id --output /path/to/merged.csv
+```
+
+설정 파일 예제와 오류 대응은 [REPORT_GUIDE.md](REPORT_GUIDE.md)에 있습니다. 보고서는 원본 데이터 자체의 품질이나 합격 여부를 임의로 판정하지 않습니다.
