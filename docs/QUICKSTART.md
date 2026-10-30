@@ -99,3 +99,20 @@ python3 scripts/merge_tables.py --left /path/to/first.csv --right /path/to/secon
 ```
 
 설정 파일 예제와 오류 대응은 [REPORT_GUIDE.md](REPORT_GUIDE.md)에 있습니다. 보고서는 원본 데이터 자체의 품질이나 합격 여부를 임의로 판정하지 않습니다.
+
+
+## 8. 개선된 작업 키트 사용법
+
+추가 도구를 설치하거나 모두 실행할 필요가 없습니다. [처음 시작 안내](START_HERE.md)를 읽은 다음 필요한 코드만 선택합니다.
+
+~~~bash
+python3 scripts/environment_check.py
+python3 scripts/join_audit.py --left /data/left.csv --right /data/right.csv --keys id --relationship many_to_one
+python3 scripts/compare_tables.py /data/old.csv /data/new.csv --keys id
+python3 scripts/rule_check.py --config /data/rules.json
+python3 -m unittest discover -s tests -v
+~~~
+
+위의 /data 경로와 id 열은 예시입니다. 실제 파일이 없으면 오류가 정상입니다. 각 명령어의 입력과 결과 해석은 [전체 도구 카탈로그](TOOL_CATALOG.md)에 있습니다.
+
+**일반 업무에선 도구가 목적이 아닙니다.** 먼저 현재 프로젝트의 지시서와 실제 파일을 확인한 뒤 필요한 기능에만 활용하세요. Codex Skill 등록이나 외부 패키지 설치는 기본 단계가 아닙니다.

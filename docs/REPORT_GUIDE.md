@@ -86,4 +86,32 @@ python3 scripts/quality_report.py --config /data/report_spec.json --output /data
 python3 -m unittest discover -s tests -v
 ```
 
-총 10개 자동 테스트를 제공합니다. 별도의 샘플 데이터 파일을 공개 저장소에 저장하지 않고, 테스트 실행 중 임시 파일을 만들어 사용합니다.
+총 24개 단위 테스트를 정의했습니다. 사용 환경에서 직접 실행해 실제 결과를 확인하세요. 별도의 샘플 데이터 파일을 공개 저장소에 저장하지 않고, 테스트 실행 중 임시 파일을 만들어 사용합니다.
+
+
+## 7. 그룹별 가중 비율
+
+단순한 행별 비율 평균이 아니라 그룹의 분자·분모를 합산하는 계산을 지원합니다. 아래 예시의 실제 데이터에는 line, tested, passed 열이 존재해야 합니다.
+
+~~~json
+{
+  "title": "그룹별 통과율",
+  "sources": [{"name": "records", "path": "records.csv"}],
+  "groups": [{
+    "name": "라인별 통과율",
+    "source": "records",
+    "by": "line",
+    "operation": "ratio_percent",
+    "numerator_column": "passed",
+    "denominator_column": "tested"
+  }]
+}
+~~~
+
+각 그룹의 계산은 SUM(passed)/SUM(tested)×100입니다. 분모가 0이면 오류로 처리합니다. 분자·분모가 같은 모집단인지, 중복 검사 기록인지 등을 확인해야 합니다.
+
+## 8. 잘못된 병합을 피하는 방법
+
+병합 전에 join_audit.py로 연결 키 유일성, 미매칭, 예상 행 수를 먼저 확인하세요. merge_tables.py는 **단일 키** 결합만 지원하므로 복합키가 필요하면 명시적으로 맞는 구현을 추가해야 합니다.
+
+별도 저장소에 합성 예제 파일을 넣지 않았습니다. 테스트 파일은 unittest 실행 시 임시 디렉터리 안에서 생성합니다.
