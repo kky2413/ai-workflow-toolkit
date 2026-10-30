@@ -59,7 +59,7 @@ def pretty(value):
 
 
 def safe(value):
-    return str(value).replace('|', '\|').replace('\r', ' ').replace('\n', ' ')
+    return str(value).replace('|', '\\|').replace('\r', ' ').replace('\n', ' ')
 
 
 def generate(spec_path):
@@ -67,6 +67,8 @@ def generate(spec_path):
     spec = json.loads(spec_path.read_text(encoding='utf-8-sig'))
     if not isinstance(spec, dict) or not isinstance(spec.get('sources'), list) or not spec['sources']:
         raise ValueError('설정에 sources 배열이 필요합니다')
+    if not spec.get('metrics') and not spec.get('groups'):
+        raise ValueError('계산할 metrics 또는 groups가 최소 1개 필요합니다')
     title = str(spec.get('title') or '데이터 요약 보고서')
     datasets = {}
     for source in spec['sources']:
@@ -118,7 +120,14 @@ def generate(spec_path):
             buckets[label].append(row)
         lines += ['', f'## {safe(name)}', '', f'| {safe(by)} | 값 |', '| --- | ---: |']
         for label, rows in sorted(buckets.items()):
-            val = aggregate(rows, ds['headers'], group['operation'], group.get('column'))
+            if group['operation'] == 'ratio_percent':
+                numerator = aggregate(rows, ds['headers'], 'sum', group.get('numerator_column'))
+                denominator = aggregate(rows, ds['headers'], 'sum', group.get('denominator_column'))
+                if denominator == 0:
+                    raise ValueError(f'{label}: 그룹별 비율의 분모가 0입니다')
+                val = numerator / denominator * 100
+            else:
+                val = aggregate(rows, ds['headers'], group['operation'], group.get('column'))
             lines.append(f'| {safe(label)} | {pretty(val)} |')
     lines += ['', '## 확인 사항', '', '- 표의 값은 설정 파일의 열과 연산을 적용한 결과입니다.', '- 데이터의 업무적 의미, 합격 기준, 통계적 타당성은 별도 확인이 필요합니다.', '- 비율의 분자·분모는 설정 파일에 명시된 지표를 사용합니다.', '']
     return '\n'.join(lines)

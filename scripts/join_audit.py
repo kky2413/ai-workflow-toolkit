@@ -32,7 +32,7 @@ def audit(left_path, right_path, keys, relationship="many_to_one"):
     valid = {"one_to_one": not ld and not rd, "one_to_many": not ld,
              "many_to_one": not rd, "many_to_many": True}[relationship]
     return {
-        "valid": bool(valid), "relationship": relationship, "keys": keys,
+        "valid": bool(valid) and bool(left) and bool(right), "relationship": relationship, "keys": keys,
         "left": {"rows": len(left), "distinct_keys": len(a), "duplicate_key_groups": ld, "unmatched_rows": lmiss},
         "right": {"rows": len(right), "distinct_keys": len(b), "duplicate_key_groups": rd, "unmatched_rows": rmiss},
         "predicted_rows": {"inner": inner, "left": inner + lmiss,

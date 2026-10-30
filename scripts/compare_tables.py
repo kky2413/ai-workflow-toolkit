@@ -34,7 +34,7 @@ def compare(before, after, keys):
             for col in changed:
                 by_column[col] = by_column.get(col, 0) + 1
     added, removed = len(b.keys() - a.keys()), len(a.keys() - b.keys())
-    return {"identical": not (added or removed or altered), "keys": keys,
+    return {"identical": bool(left) and bool(right) and not (added or removed or altered), "keys": keys,
             "before_rows": len(left), "after_rows": len(right),
             "added_rows": added, "removed_rows": removed,
             "changed_rows": altered, "unchanged_rows": len(a.keys() & b.keys()) - altered,

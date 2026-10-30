@@ -24,15 +24,17 @@ def join(left_path, right_path, key, how='left', prefix='right_'):
         val = row.get(key)
         if val is None or not str(val).strip():
             raise ValueError('오른쪽 파일에 빈 연결 키가 있습니다')
-        token = str(val).strip()
+        token = str(val)
         if token in lookup:
             raise ValueError(f'오른쪽 파일에 중복된 연결 키가 있습니다: {token}')
         lookup[token] = row
     results = []
     for row in left_rows:
         val = row.get(key)
-        token = str(val).strip() if val is not None else ''
-        match = lookup.get(token) if token else None
+        if val is None or not str(val).strip():
+            raise ValueError('왼쪽 파일에 빈 연결 키가 있습니다')
+        token = str(val)
+        match = lookup.get(token)
         if how == 'inner' and match is None:
             continue
         out = dict(row)
