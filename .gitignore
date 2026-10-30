@@ -4,11 +4,11 @@ __pycache__/
 .venv/
 venv/
 node_modules/
+.next/
 .DS_Store
 .env
 .env.*
 !.env.example
-# Temporary / assessment outputs that must not be pushed
 work/
 outputs/
 reports/

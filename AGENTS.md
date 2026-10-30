@@ -1,16 +1,22 @@
-# AGENTS.md — Generic AI workflow toolkit
+# Codex 작업 원칙
 
-## Scope
-This repository is a reusable, general-purpose collection of local scripts and templates. It is not an answer to any particular assessment or task. Follow the actual task instructions and applicable platform rules first.
+## 목적과 범위
+이 저장소는 범용 파일 분석 및 검증 도구와 한국어 사용 설명서를 제공한다. 개별 프로젝트의 명시적 요구사항과 작업 환경의 규칙을 먼저 따른다.
 
-## Working rules
-1. Read the current task instructions/README before taking action. Identify deliverables and acceptance criteria.
-2. Inspect only relevant files; summarize findings briefly before changing code. Do not repeatedly read unchanged large files without reason.
-3. Make the smallest change that meets the requirements. Keep existing files and paths unless the task requires changes.
-4. Use standard-library tools where practical; do not install packages merely to replicate a trivial operation.
-5. Validate facts, calculations, and code with observable evidence. Run relevant tests and inspect output files.
-6. Never assert success based only on an AI response. State completed items, tests run, and limitations.
-7. Do not export inputs, outputs, logs, proprietary materials, or credentials to external services. No push, upload, remote deployment, or external API requests unless the task rules explicitly permit them.
-8. Do not bypass supervision, sandbox restrictions, upload policies, or tool/automation restrictions.
+## 기본 규칙
+1. 작업 시작 전에 현재 프로젝트의 README와 필수 요구사항을 읽고 결과물·검증 기준을 파악한다.
+2. 수정 전 해당 기능의 관련 파일과 테스트만 확인한다. 불필요하게 전체 파일을 반복 출력하지 않는다.
+3. 필요한 범위만 수정하며 기존 동작과 경로를 가능하면 유지한다.
+4. 가능한 한 설치가 필요 없는 표준 라이브러리와 기존 코드를 재사용한다.
+5. 실행 가능한 테스트와 결과물 확인으로 검증한다. 실제 실행하지 않은 테스트를 성공했다고 표현하지 않는다.
+6. 완료 시 수정 파일, 검증 명령과 관찰 결과, 미검증 항목을 간결히 설명한다.
+7. 비밀 정보·개인 자료·내부 파일을 외부 저장소나 서비스로 전송하지 않는다. 외부 접속과 명령 실행은 현재 환경의 허용 범위 내에서만 수행한다.
+8. 접근 제한·승인 절차·환경 설정을 우회하거나 임의로 변경하지 않는다.
 
-The toolkit contains example data only. Do not confuse sample content with actual assignment data.
+## 저장소 구조
+- 실행 코드: `scripts/`
+- 테스트 코드: `tests/`
+- 한국어 설명 문서: `docs/`
+- 작업 양식: `docs/templates/`
+
+문서는 필요한 경우 `docs/CODE_REVIEW.md` 및 `docs/CODEX_COMMANDS.md`를 참고한다.

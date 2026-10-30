@@ -1,5 +1,0 @@
-[
-  {"case_id": "case1", "status": "open", "amount": 120},
-  {"case_id": "case2", "status": "closed", "amount": 80},
-  {"case_id": "case3", "status": "open", "amount": null}
-]
