@@ -139,3 +139,8 @@ python3 scripts/json_structure_check.py --config /data/contract.json
 ~~~
 
 source 경로는 contract.json이 있는 폴더 기준입니다. 검사 타입은 string, number, integer, boolean, object, array, null입니다. 누락·자료형 오류·허용하지 않은 추가 열 개수를 보고합니다. 원본 값은 결과에 포함하지 않고, 빈 배열을 통과로 처리하지 않습니다.
+
+
+### 숫자 열의 누락값 처리
+
+quality_report.py의 sum/mean/min/max는 기본적으로 **비어 있는 숫자 셀을 발견하면 중단**합니다. 합당한 데이터 처리 정책이 이미 확인된 경우에만 해당 metrics 또는 groups 항목에 allow_missing: true를 작성하세요. 그 경우에도 최종 분모·표본 수를 별도로 검산해야 합니다.

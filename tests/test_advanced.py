@@ -120,3 +120,21 @@ class AdvancedTests(unittest.TestCase):
     def test_reject_external_http(self):
         with self.assertRaisesRegex(ValueError, "외부"):
             http_check("http://example.com/")
+
+    def test_report_rejects_missing_numeric_by_default(self):
+        self.csv("d.csv", "value\n5\n\n7\n")
+        src = self.spec("report.json", {
+            "sources": [{"name": "d", "path": "d.csv"}],
+            "metrics": [{"name": "합계", "source": "d", "column": "value", "operation": "sum"}]})
+        # Truly blank CSV lines are skipped; use an explicit empty cell in a second column.
+        self.csv("d.csv", "value,tag\n5,a\n,b\n7,c\n")
+        with self.assertRaisesRegex(ValueError, "누락값"):
+            generate(src)
+
+    def test_report_missing_numeric_requires_opt_in(self):
+        self.csv("d.csv", "value,tag\n5,a\n,b\n7,c\n")
+        src = self.spec("report.json", {
+            "sources": [{"name": "d", "path": "d.csv"}],
+            "metrics": [{"name": "합계", "source": "d", "column": "value",
+                         "operation": "sum", "allow_missing": True}]})
+        self.assertIn("| 합계 | sum(d.value) | 12 |", generate(src))

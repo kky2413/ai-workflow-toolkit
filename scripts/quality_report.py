@@ -32,7 +32,9 @@ def as_decimal(value):
     return num
 
 
-def aggregate(rows, headers, operation, column=None):
+def aggregate(rows, headers, operation, column=None, allow_missing=False):
+    if type(allow_missing) is not bool:
+        raise ValueError('allow_missing은 true/false여야 합니다')
     if operation not in OPERATIONS:
         raise ValueError(f'지원하지 않는 연산: {operation}')
     if operation == 'count':
@@ -42,6 +44,8 @@ def aggregate(rows, headers, operation, column=None):
     values = [row.get(column) for row in rows if present(row.get(column))]
     if operation == 'count_nonmissing':
         return Decimal(len(values))
+    if not allow_missing and len(values) != len(rows):
+        raise ValueError(f'누락값이 있는 숫자 열: {column}. allow_missing을 명시적으로 선택하세요')
     if not values:
         raise ValueError(f'계산할 숫자 값이 없습니다: {column}')
     nums = [as_decimal(v) for v in values]
@@ -55,7 +59,9 @@ def aggregate(rows, headers, operation, column=None):
 
 
 def pretty(value):
-    return format(value.quantize(Decimal('.000001')).normalize(), 'f') if value else '0'
+    if not value:
+        return '0'
+    return format(value, '.6f').rstrip('0').rstrip('.')
 
 
 def safe(value):
@@ -102,7 +108,7 @@ def generate(spec_path):
                 raise ValueError(f'데이터를 찾을 수 없습니다: {source}')
             ds = datasets[source]
             column = metric.get('column')
-            result = aggregate(ds['rows'], ds['headers'], operation, column)
+            result = aggregate(ds['rows'], ds['headers'], operation, column, metric.get('allow_missing', False))
             method = f'{operation}({source}.{column})' if column else f'{operation}({source})'
             unit = metric.get('unit', '')
         metrics[name] = result
@@ -127,7 +133,7 @@ def generate(spec_path):
                     raise ValueError(f'{label}: 그룹별 비율의 분모가 0입니다')
                 val = numerator / denominator * 100
             else:
-                val = aggregate(rows, ds['headers'], group['operation'], group.get('column'))
+                val = aggregate(rows, ds['headers'], group['operation'], group.get('column'), group.get('allow_missing', False))
             lines.append(f'| {safe(label)} | {pretty(val)} |')
     lines += ['', '## 확인 사항', '', '- 표의 값은 설정 파일의 열과 연산을 적용한 결과입니다.', '- 데이터의 업무적 의미, 합격 기준, 통계적 타당성은 별도 확인이 필요합니다.', '- 비율의 분자·분모는 설정 파일에 명시된 지표를 사용합니다.', '']
     return '\n'.join(lines)
